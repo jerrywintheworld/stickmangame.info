@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play Words Of Wonders - the ultimate word puzzle game online for free. Expand your vocabulary with this addictive word search challenge.">
+    <link rel="canonical" href="https://stickmangame.info/words-of-wonders">
+    <title>Words Of Wonders - Free Online Word Puzzle Game | StickmanGame.info</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-blue': '#0071e3',
+                        'apple-gray': '#f5f5f7',
+                        'apple-dark': '#1d1d1f',
+                        'apple-light': '#86868b',
+                        'apple-accent': '#bf4800'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #fbfbfd;
+            color: #1d1d1f;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #f0f8ff 0%, #f8fafc 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDYwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTMwMCAxMDBMMzUwIDIwMEwyNTAgMjAwTDMwMCAxMDBaIiBmaWxsPSIjZjBmOGZmIiBzdHJva2U9IiNmMGY4ZmYiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==');
+            background-size: 400px;
+            opacity: 0.4;
+        }
+        
+        .game-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+        }
+        
+        .game-iframe {
+            width: 100%;
+            height: 550px;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .game-iframe {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-iframe {
+                height: 300px;
+            }
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            transition: all 0.2s ease;
+            border-radius: 14px;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            transform: scale(1.03);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .icon-bg {
+            background: rgba(0,113,227,0.1);
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: #0071e3;
+            border-radius: 2px;
+        }
+        
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0071e3;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .footer-link {
+            transition: all 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            color: #0071e3;
+            transform: translateX(5px);
+        }
+        
+        .letter-icon {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: #0071e3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 100px;
+            opacity: 0.1;
+            z-index: 0;
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .control-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        
+        .key {
+            display: inline-block;
+            background: #f5f5f7;
+            border-radius: 8px;
+            padding: 5px 12px;
+            font-weight: 600;
+            margin: 0 4px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .tip-card {
+            background: linear-gradient(135deg, #f0f8ff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(0, 113, 227, 0.15);
+        }
+        
+        .puzzle-example {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .puzzle-cell {
+            background: #f5f5f7;
+            border-radius: 10px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1d1d1f;
+            font-family: 'Merriweather', serif;
+        }
+        
+        .puzzle-cell.filled {
+            background: #0071e3;
+            color: white;
+        }
+        
+        .puzzle-cell.highlight {
+            background: #ffd966;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="bg-apple-blue w-10 h-10 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-book text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-xl font-bold ml-3">Stickman<span class="text-apple-blue">Game</span>.info</h1>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#game" class="nav-link text-gray-700 font-medium">Play Now</a>
+                    <a href="#features" class="nav-link text-gray-700 font-medium">Features</a>
+                    <a href="#about" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="#tips" class="nav-link text-gray-700 font-medium">Tips</a>
+                </nav>
+                
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section py-16 md:py-24">
+        <div class="hero-pattern"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <div class="letter-icon -left-10 -top-10">W</div>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight font-serif">Words Of <span class="text-apple-blue">Wonders</span></h1>
+                    <p class="text-xl md:text-2xl text-apple-light mb-10 max-w-xl">
+                        Discover words, solve puzzles, and expand your vocabulary in this captivating word adventure!
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#game" class="btn bg-apple-blue text-white px-8 py-4 font-semibold text-lg flex items-center">
+                            <i class="fas fa-play mr-3"></i> Play Now
+                        </a>
+                        <a href="#features" class="btn bg-white border border-gray-200 text-apple-dark px-8 py-4 font-semibold text-lg">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="letter-icon -right-10 top-20">O</div>
+                        <div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-100 transform rotate-3">
+                            <img src="https://img.crazygames.com/games/words-of-wonders/cover-1594115755682.png?auto=format%2Ccompress&q=75" alt="Words Of Wonders Game" class="w-full rounded-xl shadow-md">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 bg-apple-blue text-white px-6 py-3 rounded-full font-semibold shadow-lg">
+                            <i class="fas fa-brain mr-2"></i> #1 Word Game
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Section -->
+    <section id="game" class="py-16 bg-apple-gray">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="section-title text-3xl font-bold mb-12 text-center">Play Words Of Wonders Online</h2>
+                
+                <div class="game-container">
+                    <iframe src="https://www.crazygames.com/embed/words-of-wonders" class="game-iframe" title="Words Of Wonders Game" allow="autoplay; fullscreen"></iframe>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-lg text-apple-light">
+                        Game loads in the iframe above. If you see any issues, 
+                        <a href="https://www.crazygames.com/game/words-of-wonders" class="text-apple-blue font-medium hover:underline" target="_blank">play directly on CrazyGames</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-title text-3xl font-bold mb-6">About Words Of Wonders</h2>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">
+                        Words Of Wonders is a captivating word puzzle game that challenges players to find hidden words in a grid of letters. With hundreds of levels set in beautiful locations around the world, this game combines vocabulary building with engaging gameplay.
+                    </p>
+                    <p class="mb-4">
+                        The game takes players on a linguistic journey through famous wonders of the world, from the Pyramids of Giza to the Great Wall of China. Each level presents a unique crossword puzzle where players must connect letters to form words that match the given clues.
+                    </p>
+                    <p>
+                        Words Of Wonders stands out with its educational value, beautiful design, and progressively challenging puzzles. Whether you're a word game enthusiast or just looking to expand your vocabulary, this game offers a rewarding experience that stimulates your mind while providing hours of entertainment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-apple-gray">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold mb-16 text-center">Game Features</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card p-8">
+                    <div class="icon-bg mb-6">
+                        <i class="fas fa-globe-americas text-apple-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Global Locations</h3>
+                    <p class="text-gray-600">Travel to famous wonders of the world as you progress through levels.</p>
+                </div>
+                
+                <div class="feature-card p-8">
+                    <div class="icon-bg mb-6">
+                        <i class="fas fa-puzzle-piece text-apple-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Hundreds of Puzzles</h3>
+                    <p class="text-gray-600">Solve over 1000 unique word puzzles with increasing difficulty.</p>
+                </div>
+                
+                <div class="feature-card p-8">
+                    <div class="icon-bg mb-6">
+                        <i class="fas fa-book text-apple-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Educational Value</h3>
+                    <p class="text-gray-600">Learn new words and expand your vocabulary with each level.</p>
+                </div>
+                
+                <div class="feature-card p-8">
+                    <div class="icon-bg mb-6">
+                        <i class="fas fa-lightbulb text-apple-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Smart Hints System</h3>
+                    <p class="text-gray-600">Get helpful hints when you're stuck without spoiling the fun.</p>
+                </div>
+                
+                <div class="feature-card p-8">
+                    <div class="icon-bg mb-6">
+                        <i class="fas fa-trophy text-apple-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Achievements</h3>
+                    <p class="text-gray-600">Earn rewards and achievements for completing challenges.</p>
+                </div>
+                
+                <div class="feature-card p-8">
+                    <div class="icon-bg mb-6">
+                        <i class="fas fa-sync-alt text-apple-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Regular Updates</h3>
+                    <p class="text-gray-600">New puzzles and locations added regularly to keep gameplay fresh.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Puzzle Example Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-title text-3xl font-bold mb-6">Puzzle Example</h2>
+                <p class="text-gray-600 mb-12 max-w-2xl mx-auto">Here's a sample puzzle similar to what you'll find in Words Of Wonders. Can you find the word "WONDER" in this grid?</p>
+                
+                <div class="puzzle-example">
+                    <div class="puzzle-grid mb-8">
+                        <div class="puzzle-cell">W</div>
+                        <div class="puzzle-cell">O</div>
+                        <div class="puzzle-cell">R</div>
+                        <div class="puzzle-cell">D</div>
+                        <div class="puzzle-cell">S</div>
+                        <div class="puzzle-cell">X</div>
+                        <div class="puzzle-cell filled">O</div>
+                        <div class="puzzle-cell">F</div>
+                        <div class="puzzle-cell">G</div>
+                        <div class="puzzle-cell">A</div>
+                        <div class="puzzle-cell">Y</div>
+                        <div class="puzzle-cell">N</div>
+                        <div class="puzzle-cell filled">N</div>
+                        <div class="puzzle-cell">Z</div>
+                        <div class="puzzle-cell">P</div>
+                        <div class="puzzle-cell">Q</div>
+                        <div class="puzzle-cell">D</div>
+                        <div class="puzzle-cell filled">D</div>
+                        <div class="puzzle-cell">L</div>
+                        <div class="puzzle-cell">M</div>
+                        <div class="puzzle-cell">V</div>
+                        <div class="puzzle-cell filled">E</div>
+                        <div class="puzzle-cell">B</div>
+                        <div class="puzzle-cell">T</div>
+                        <div class="puzzle-cell filled">R</div>
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <button id="showSolution" class="btn bg-apple-blue text-white px-6 py-3 font-semibold">
+                            <i class="fas fa-lightbulb mr-2"></i> Show Solution
+                        </button>
+                    </div>
+                    
+                    <div id="solution" class="hidden">
+                        <div class="puzzle-grid">
+                            <div class="puzzle-cell">W</div>
+                            <div class="puzzle-cell highlight">O</div>
+                            <div class="puzzle-cell">R</div>
+                            <div class="puzzle-cell">D</div>
+                            <div class="puzzle-cell">S</div>
+                            <div class="puzzle-cell">X</div>
+                            <div class="puzzle-cell highlight">O</div>
+                            <div class="puzzle-cell">F</div>
+                            <div class="puzzle-cell">G</div>
+                            <div class="puzzle-cell">A</div>
+                            <div class="puzzle-cell">Y</div>
+                            <div class="puzzle-cell highlight">N</div>
+                            <div class="puzzle-cell">N</div>
+                            <div class="puzzle-cell">Z</div>
+                            <div class="puzzle-cell">P</div>
+                            <div class="puzzle-cell">Q</div>
+                            <div class="puzzle-cell">D</div>
+                            <div class="puzzle-cell highlight">D</div>
+                            <div class="puzzle-cell">L</div>
+                            <div class="puzzle-cell">M</div>
+                            <div class="puzzle-cell">V</div>
+                            <div class="puzzle-cell highlight">E</div>
+                            <div class="puzzle-cell">B</div>
+                            <div class="puzzle-cell">T</div>
+                            <div class="puzzle-cell highlight">R</div>
+                        </div>
+                        <p class="mt-6 text-gray-700 font-medium">The word "WONDER" is hidden vertically in the second column!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section id="tips" class="py-20 bg-apple-gray">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-title text-3xl font-bold mb-6">Tips & Strategies</h2>
+                
+                <div class="controls-grid mb-12">
+                    <div class="control-card">
+                        <h3 class="text-xl font-bold mb-4 text-apple-blue">Game Controls</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="key">Mouse/Touch</span>
+                                <span>Select letters to form words</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="key">Backspace</span>
+                                <span>Clear your current selection</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="key">H</span>
+                                <span>Get a hint (costs coins)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="key">Space</span>
+                                <span>Shuffle letters (when available)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="control-card">
+                        <h3 class="text-xl font-bold mb-4 text-apple-blue">Game Interface</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="key">Clue List</span>
+                                <span>Shows words to find in current puzzle</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="key">Coin Counter</span>
+                                <span>Earn coins by completing puzzles</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="key">Hint Button</span>
+                                <span>Reveals a letter when stuck</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="key">Shuffle</span>
+                                <span>Rearrange letters for a fresh perspective</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tip-card">
+                    <h3 class="text-xl font-bold mb-4 text-apple-blue">Word Finding Strategies</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-apple-blue font-bold mr-2">•</span>
+                            <span>Start with the longest words first - they're often easier to spot</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-apple-blue font-bold mr-2">•</span>
+                            <span>Look for common prefixes and suffixes (un-, re-, -ing, -ed)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-apple-blue font-bold mr-2">•</span>
+                            <span>Focus on unusual letter combinations (like "qu" or "x")</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-apple-blue font-bold mr-2">•</span>
+                            <span>Remember words can be vertical, horizontal, or diagonal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-apple-blue font-bold mr-2">•</span>
+                            <span>Take breaks - fresh eyes often spot words you previously missed</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <a href="#game" class="btn bg-apple-blue text-white px-8 py-4 font-semibold text-lg inline-flex items-center">
+                        <i class="fas fa-play mr-3"></i> Start Playing Words Of Wonders
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-apple-dark text-gray-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-white text-lg font-semibold mb-4">Words Of Wonders</h3>
+                        <p class="mb-4">The ultimate word puzzle experience. Play for free in your browser!</p>
+                        <p>© 2023 StickmanGame.info</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-white text-lg font-semibold mb-4">Navigation</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#game" class="footer-link block">Play Game</a></li>
+                            <li><a href="#features" class="footer-link block">Features</a></li>
+                            <li><a href="#about" class="footer-link block">About</a></li>
+                            <li><a href="#tips" class="footer-link block">Tips</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-white text-lg font-semibold mb-4">Legal</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="footer-link block">Privacy Policy</a></li>
+                            <li><a href="#" class="footer-link block">Terms of Use</a></li>
+                            <li><a href="#" class="footer-link block">Cookie Policy</a></li>
+                            <li><a href="#" class="footer-link block">Disclaimer</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-white text-lg font-semibold mb-4">Game Info</h3>
+                        <p class="mb-4">Words Of Wonders is hosted with permission from CrazyGames.com</p>
+                        <a href="https://www.crazygames.com/game/words-of-wonders" class="text-apple-blue hover:underline" target="_blank">Official Game Page</a>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                    <p>This website is an unofficial portal for Words Of Wonders. All game rights belong to the respective owners. stickmangame.info is not affiliated with the game developers.</p>
+                    <p class="mt-2">Words Of Wonders is a trademark of its respective owner.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Play Button -->
+    <a href="#game" class="fixed bottom-6 right-6 bg-apple-blue text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg z-50 hover:scale-110 transition-transform">
+        <i class="fas fa-play text-2xl"></i>
+    </a>
+
+    <script>
+        // Show puzzle solution
+        document.getElementById('showSolution').addEventListener('click', function() {
+            document.getElementById('solution').classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
