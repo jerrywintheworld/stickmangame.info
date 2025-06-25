@@ -3,233 +3,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Count Masters: Stickman Clash - Play Online Free | CrazyGames</title>
-    <meta name="description" content="Play Count Masters: Stickman Clash online for free! Lead your stickman army to conquer castles in this strategic action game.">
-    <meta name="keywords" content="count masters, stickman clash, stickman game, strategy game, free online game, crazygames">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.crazygames.com/game/count-masters-stickman-games">
+    <meta name="description" content="StickmanGame.info - Play the best free Stickman games online. Stickman Clash, Stickman Fight, and many more exciting stickman games!">
+    <link rel="canonical" href="https://stickmangame.info">
+    <title>StickmanGame.info - Free Online Stickman Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --apple-light: #f5f5f7;
-            --apple-dark: #1d1d1f;
-            --apple-blue: #0071e3;
-            --apple-orange: #ff9500;
-            --apple-gray: #86868b;
-            --apple-card: #ffffff;
-            --apple-shadow: rgba(0, 0, 0, 0.1);
-            --apple-gradient: linear-gradient(135deg, #2c3e50, #1a1a2e);
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6c5ce7',
+                        'dark': '#1a1a2e',
+                        'darker': '#0f0f1a',
+                        'accent': '#ff6b6b',
+                        'light': '#e2e2e2'
+                    }
+                }
+            }
         }
-
+    </script>
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
-
+        
         body {
-            background-color: var(--apple-light);
-            color: var(--apple-dark);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            color: #e2e2e2;
             line-height: 1.6;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        
+        .header-gradient {
+            background: linear-gradient(90deg, #6c5ce7 0%, #ff6b6b 100%);
         }
-
-        /* Header */
-        header {
-            background: var(--apple-gradient);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        
+        .game-card {
+            transition: all 0.3s ease;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
         }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.3);
+            border-color: rgba(108, 92, 231, 0.5);
         }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        
+        .game-thumbnail {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
         }
-
-        .logo-icon {
-            background: var(--apple-orange);
-            width: 40px;
-            height: 40px;
+        
+        .game-thumbnail img {
+            transition: all 0.4s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .game-card:hover .game-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 107, 107, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        /* Hero Section */
-        .hero {
-            padding: 3rem 0;
-            text-align: center;
+        
+        .game-card:hover .play-button {
+            opacity: 1;
         }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--apple-orange), #ff2a78);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .tagline {
-            font-size: 1.5rem;
-            color: var(--apple-gray);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-
-        /* Game Container */
-        .game-container {
-            background: var(--apple-card);
+        
+        .featured-game {
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 30px var(--apple-shadow);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .game-frame-container {
             position: relative;
-            padding-bottom: 75%;
-            height: 0;
+            height: 400px;
         }
-
-        .game-frame {
+        
+        .featured-overlay {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Features */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .feature-card {
-            background: var(--apple-card);
-            border-radius: 12px;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
         }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--apple-orange);
-            margin-bottom: 1rem;
+        
+        .category-btn {
+            transition: all 0.2s ease;
+            border: 1px solid rgba(108, 92, 231, 0.3);
         }
-
-        /* Footer */
-        footer {
-            background: var(--apple-gradient);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
+        
+        .category-btn:hover, .category-btn.active {
+            background: #6c5ce7;
+            border-color: #6c5ce7;
         }
-
-        /* Responsive */
+        
+        .search-box {
+            background: rgba(26, 26, 46, 0.7);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+        
+        .search-box:focus {
+            border-color: #6c5ce7;
+        }
+        
+        .nav-link {
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #6c5ce7 0%, #ff6b6b 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .footer-link {
+            transition: all 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            color: #ff6b6b;
+            transform: translateX(3px);
+        }
+        
+        .game-container {
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+        
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .tagline { font-size: 1.2rem; }
-            .features { grid-template-columns: 1fr; }
+            .featured-game {
+                height: 300px;
+            }
+            
+            .game-thumbnail {
+                height: 150px;
+            }
         }
     </style>
 </head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6XGSQ5V660"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6XGSQ5V660');
-</script>
 <body>
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <div class="logo-icon">C</div>
-                <span>Count Masters</span>
+    <!-- Top Bar -->
+    <div class="bg-darker py-2 px-4 text-sm">
+        <div class="container mx-auto flex justify-between">
+            <div>StickmanGame.info - The Ultimate Stickman Games Portal</div>
+            <div>
+                <a href="#" class="text-light hover:text-accent mr-4"><i class="fas fa-user mr-1"></i> Login</a>
+                <a href="#" class="text-light hover:text-accent"><i class="fas fa-heart mr-1"></i> Favorites</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-dark shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="bg-primary w-12 h-12 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-gamepad text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold">
+                        <span class="text-light">Stickman</span>
+                        <span class="text-primary">Game</span>
+                        <span class="text-accent">.info</span>
+                    </h1>
+                </div>
+                
+                <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                    <div class="relative">
+                        <input type="text" placeholder="Search stickman games..." class="w-full py-2 pl-10 pr-4 text-light bg-transparent border border-gray-700 rounded-full search-box focus:outline-none">
+                        <i class="fas fa-search absolute left-3 top-2.5 text-gray-500"></i>
+                    </div>
+                </div>
+                
+                <nav class="flex space-x-1">
+                    <a href="#" class="btn-primary px-5 py-2 rounded-full font-medium">Home</a>
+                    <a href="#" class="px-5 py-2 rounded-full font-medium bg-transparent hover:bg-gray-800">Categories</a>
+                    <a href="#" class="px-5 py-2 rounded-full font-medium bg-transparent hover:bg-gray-800">New Games</a>
+                    <a href="#" class="px-5 py-2 rounded-full font-medium bg-transparent hover:bg-gray-800">Top Games</a>
+                </nav>
             </div>
         </div>
     </header>
 
-    <main class="container">
-        <section class="hero">
-            <h1>Count Masters: Stickman Clash</h1>
-            <p class="tagline">Lead your stickman army to victory! Conquer castles and defeat enemies in this strategic action game.</p>
-            
-            <div class="game-container">
-                <div class="game-frame-container">
-                    <iframe 
-                        class="game-frame"
-                        src="https://www.crazygames.com/embed/count-masters-stickman-games" 
-                        allowfullscreen
-                        title="Count Masters: Stickman Clash Game">
-                    </iframe>
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="container mx-auto px-4">
+            <!-- Featured Game -->
+            <section class="mb-16">
+                <h2 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="header-gradient px-4 py-2 rounded-lg mr-3">Featured Game</span>
+                    <span>Stickman Clash</span>
+                </h2>
+                
+                <div class="featured-game" style="background: url('https://img.crazygames.com/games/stickman-clash/cover-1594115755682.png?auto=format%2Ccompress&q=75') center/cover;">
+                    <div class="featured-overlay">
+                        <h3 class="text-3xl font-bold mb-2">Stickman Clash</h3>
+                        <p class="text-light mb-4 max-w-2xl">Experience intense stickman battles with smooth controls and epic fighting moves. Choose your fighter and dominate the arena!</p>
+                        <a href="#" class="btn-primary px-6 py-3 rounded-full font-semibold inline-flex items-center">
+                            <i class="fas fa-play mr-2"></i> Play Now
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3>Army Building</h3>
-                <p>Gather stickman warriors as you progress through levels</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🏰</div>
-                <h3>Castle Conquest</h3>
-                <p>Strategize to defeat enemy kings and capture their castles</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚔️</div>
-                <h3>Epic Battles</h3>
-                <p>Engage in intense stickman clashes with tactical decisions</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>How to Play</h2>
-            <ul>
-                <li><strong>Control your stickman</strong> and gather allies along your path</li>
-                <li><strong>Choose optimal gates</strong> to maximize your army size</li>
-                <li><strong>Break obstacles</strong> and defeat opponents in your way</li>
-                <li><strong>Collect coins</strong> to upgrade your capabilities</li>
-                <li><strong>Confront the stickman king</strong> in final castle battles</li>
-            </ul>
-        </section>
+            </section>
+            
+            <!-- Categories -->
+            <section class="mb-16">
+                <h2 class="text-2xl font-bold mb-6">Categories</h2>
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <button class="category-btn px-4 py-2 rounded-full active">All Games</button>
+                    <button class="category-btn px-4 py-2 rounded-full">Fighting</button>
+                    <button class="category-btn px-4 py-2 rounded-full">Action</button>
+                    <button class="category-btn px-4 py-2 rounded-full">Adventure</button>
+                    <button class="category-btn px-4 py-2 rounded-full">Shooting</button>
+                    <button class="category-btn px-4 py-2 rounded-full">Multiplayer</button>
+                    <button class="category-btn px-4 py-2 rounded-full">IO Games</button>
+                </div>
+            </section>
+            
+            <!-- Popular Games -->
+            <section class="mb-16">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Popular Stickman Games</h2>
+                    <div class="flex items-center">
+                        <span class="mr-3">Sort by:</span>
+                        <select class="bg-dark border border-gray-700 rounded px-3 py-1 focus:outline-none">
+                            <option>Popularity</option>
+                            <option>Newest</option>
+                            <option>Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    <!-- Game Card 1 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/stickman-clash/cover-1594115755682.png?auto=format%2Ccompress&q=75" alt="Stickman Clash">
+                            <div class="play-button">
+                                <i class="fas fa-play text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Stickman Clash</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.7</span>
+                                <span><i class="fas fa-play-circle text-primary mr-1"></i> 2.4M</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Epic stickman battles with awesome fighting moves and multiple characters.</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 2 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/stickman-hook/cover-1583415055742.png?auto=format%2Ccompress&q=75" alt="Stickman Hook">
+                            <div class="play-button">
+                                <i class="fas fa-play text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Stickman Hook</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.8</span>
+                                <span><i class="fas fa-play-circle text-primary mr-1"></i> 5.1M</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Swing like a stickman hero through challenging levels with your rope.</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 3 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/rooftop-snipers/cover-1562590063838.png?auto=format%2Ccompress&q=75" alt="Rooftop Snipers">
+                            <div class="play-button">
+                                <i class="fas fa-play text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Rooftop Snipers</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.6</span>
+                                <span><i class="fas fa-play-circle text-primary mr-1"></i> 3.8M</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Intense stickman sniper duels on rooftops. Can you keep your balance?</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 4 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/stickman-fight/cover-1585146801140.png?auto=format%2Ccompress&q=75" alt="Stickman Fight">
+                            <div class="play-button">
+                                <i class="fas fa-play text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Stickman Fight</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.5</span>
+                                <span><i class="fas fa-play-circle text-primary mr-1"></i> 1.9M</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Battle against stickman warriors in this action-packed fighting game.</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 5 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/duel-stickman/cover-1592314229554.png?auto=format%2Ccompress&q=75" alt="Duel Stickman">
+                            <div class="play-button">
+                                <i class="fas fa-play text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Duel Stickman</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.3</span>
+                                <span><i class="fas fa-play-circle text-primary mr-1"></i> 1.2M</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Epic stickman duels with swords and special abilities. Defeat all opponents!</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- New Games -->
+            <section class="mb-16">
+                <h2 class="text-2xl font-bold mb-6">New Stickman Games</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Game Card 6 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/stickman-war-battle/cover-1594115761107.png?auto=format%2Ccompress&q=75" alt="Stickman War Battle">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Stickman War Battle</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.4</span>
+                                <span><i class="fas fa-calendar text-primary mr-1"></i> 2 weeks ago</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Lead your stickman army to victory in this strategic battle game.</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 7 -->
+                    <div class="game-card">
+                        <div class="game-thumbnail">
+                            <img src="https://img.crazygames.com/games/stickman-special-forces/cover-1594115761107.png?auto=format%2Ccompress&q=75" alt="Stickman Special Forces">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">Stickman Special Forces</h3>
+                            <div class="flex items-center text-sm text-gray-400 mb-3">
+                                <span class="mr-3"><i class="fas fa-heart text-accent mr-1"></i> 4.2</span>
+                                <span><i class="fas fa-calendar text-primary mr-1"></i> 3 weeks ago</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-4">Join the elite stickman special forces in this action-packed shooter.</p>
+                            <a href="#" class="btn-primary w-full py-2 text-center rounded-lg font-medium">Play Now</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Play Section -->
+            <section class="mb-16">
+                <h2 class="text-2xl font-bold mb-6">Play Stickman Clash</h2>
+                
+                <div class="game-container p-4">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-2/3">
+                            <iframe src="https://www.crazygames.com/game/stickman-clash" class="w-full h-96 rounded-lg" title="Stickman Clash Game" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="md:w-1/3">
+                            <h3 class="text-xl font-bold mb-4">About Stickman Clash</h3>
+                            <p class="text-gray-300 mb-4">Stickman Clash is an action-packed fighting game where players control stickman characters in intense combat scenarios. With simple controls and addictive gameplay, it's perfect for quick gaming sessions.</p>
+                            
+                            <div class="bg-darker p-4 rounded-lg mb-4">
+                                <h4 class="font-bold mb-2">Game Features:</h4>
+                                <ul class="list-disc pl-5 text-gray-300">
+                                    <li>Multiple stickman fighters to choose from</li>
+                                    <li>Special moves and combos</li>
+                                    <li>Simple keyboard controls</li>
+                                    <li>Multiple game modes</li>
+                                    <li>Leaderboards and achievements</li>
+                                </ul>
+                            </div>
+                            
+                            <a href="#" class="btn-primary w-full py-3 text-center rounded-lg font-medium">
+                                <i class="fas fa-play mr-2"></i> Play Fullscreen
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 CrazyGames | Play Count Masters: Stickman Clash online for free</p>
-            <p>This is an unofficial fan site. Count Masters is a trademark of Freeplay Inc.</p>
+    <!-- Footer -->
+    <footer class="bg-darker py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4 flex items-center">
+                        <span class="text-light">Stickman</span>
+                        <span class="text-primary">Game</span>
+                        <span class="text-accent">.info</span>
+                    </h3>
+                    <p class="text-gray-400 mb-4">The ultimate destination for free online stickman games. Play the best stickman fighting, action, and adventure games.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link block text-gray-400">Home</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">All Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">New Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Popular Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Categories</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link block text-gray-400">Fighting Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Action Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Adventure Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Shooting Games</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Multiplayer Games</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link block text-gray-400">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Terms of Service</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Cookie Policy</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">DMCA</a></li>
+                        <li><a href="#" class="footer-link block text-gray-400">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 StickmanGame.info. All rights reserved. This website is not affiliated with any game developers. All games are property of their respective owners.</p>
+                <p class="mt-2">Stickman Clash and other games are hosted with permission from CrazyGames.com</p>
+            </div>
         </div>
     </footer>
 </body>
