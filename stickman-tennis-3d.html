@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stickman Tennis 3D - Play Free Online Tennis Game | stickmangame.info</title>
+    <meta name="description" content="Experience fast-paced tennis action with Stickman Tennis 3D! Play against challenging opponents and master your tennis skills in this exciting sports game.">
+    <link rel="canonical" href="https://stickmangame.info/" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-blue': '#0071e3',
+                        'apple-light-gray': '#f5f5f7',
+                        'apple-dark-gray': '#1d1d1f',
+                        'apple-gray': '#86868b',
+                        'apple-card': '#ffffff',
+                        'tennis-green': '#2e8b57',
+                        'court-blue': '#1e90ff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        title: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e0f2fe 100%);
+        }
+        .game-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(to bottom, #1e90ff, #2e8b57);
+        }
+        .game-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(46, 139, 87, 0.15);
+        }
+        .btn-play {
+            background: linear-gradient(to right, #2e8b57, #1e90ff);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(30, 144, 255, 0.2);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .btn-play:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(30, 144, 255, 0.4);
+            background: linear-gradient(to right, #3da56a, #2a9dff);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2e8b57;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.92);
+        }
+        .tennis-ball {
+            animation: bounce 2s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .court-pattern {
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #2e8b57, #1e90ff);
+            border-radius: 2px;
+        }
+        .player-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .stroke-icon {
+            background: #e0f7fa;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="font-sans text-apple-dark-gray">
+    <!-- Navigation -->
+    <nav class="sticky-nav border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-tennis-green flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-apple-dark-gray">Stickman</span>
+                        <span class="text-tennis-green ml-1 font-title">Tennis 3D</span>
+                    </div>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="#game" class="nav-link text-tennis-green font-medium">Play</a>
+                        <a href="#features" class="nav-link text-apple-gray hover:text-tennis-green font-medium">Features</a>
+                        <a href="#players" class="nav-link text-apple-gray hover:text-tennis-green font-medium">Players</a>
+                        <a href="#strokes" class="nav-link text-apple-gray hover:text-tennis-green font-medium">Strokes</a>
+                        <a href="#about" class="nav-link text-apple-gray hover:text-tennis-green font-medium">About</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="https://www.crazygames.com/game/stickman-tennis-3d" target="_blank" class="hidden md:block btn-play text-white px-4 py-2 rounded-md text-sm font-medium">
+                        Play Fullscreen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
+                    <div class="inline-block bg-green-100 text-tennis-green text-sm px-4 py-1 rounded-full mb-4">
+                        PLAY FOR FREE • NO DOWNLOAD
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-apple-dark-gray mb-4 font-title">
+                        STICKMAN <span class="text-tennis-green">TENNIS 3D</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-apple-gray max-w-2xl mx-auto lg:mx-0 mb-10">
+                        Experience fast-paced tennis action with stickman characters in this exciting 3D sports game!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#game" class="btn-play inline-block text-white font-bold py-3 px-8 rounded-full text-lg">
+                            PLAY NOW
+                        </a>
+                        <a href="#features" class="bg-white border border-gray-300 text-apple-dark-gray font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-50">
+                            LEARN MORE
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center relative">
+                    <div class="w-full max-w-md">
+                        <div class="court-pattern bg-court-blue rounded-xl p-8 shadow-2xl">
+                            <div class="flex justify-center mb-6">
+                                <div class="w-64 h-32 border-b-4 border-white rounded-b-full"></div>
+                            </div>
+                            <div class="flex justify-between">
+                                <div class="relative">
+                                    <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                                        <div class="w-10 h-10 bg-white rounded-full"></div>
+                                    </div>
+                                    <div class="tennis-ball absolute top-0 right-0 w-8 h-8 bg-yellow-400 rounded-full shadow-md flex items-center justify-center">
+                                        <div class="w-1 h-1 bg-white rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                                        <div class="w-10 h-10 bg-white rounded-full"></div>
+                                    </div>
+                                    <div class="absolute top-0 left-0 w-4 h-4 bg-green-500 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute top-12 right-12 w-24 h-24 bg-tennis-green rounded-full opacity-10"></div>
+                    <div class="absolute bottom-12 left-12 w-20 h-20 bg-court-blue rounded-full opacity-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Section -->
+    <section id="game" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-4 section-title">
+                    Play Stickman Tennis 3D Online
+                </h2>
+                <p class="text-lg text-apple-gray max-w-2xl mx-auto">
+                    Enjoy the full version of Stickman Tennis 3D directly in your browser. No downloads required!
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="game-container">
+                    <iframe src="https://www.crazygames.com/embed/stickman-tennis-3d" allowfullscreen></iframe>
+                </div>
+                
+                <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://www.crazygames.com/game/stickman-tennis-3d" target="_blank" class="btn-play text-center text-white font-bold py-3 px-6 rounded-lg text-lg">
+                        PLAY FULLSCREEN
+                    </a>
+                    <button class="bg-white border border-gray-300 text-apple-dark-gray font-bold py-3 px-6 rounded-lg text-lg hover:bg-gray-50">
+                        SHARE GAME
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-apple-light-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-4 section-title">
+                    Game Features
+                </h2>
+                <p class="text-lg text-apple-gray max-w-2xl mx-auto">
+                    Discover what makes Stickman Tennis 3D an exciting sports experience
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="stroke-icon mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-tennis-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Fast-Paced Gameplay</h3>
+                    <p class="text-apple-gray">Experience intense tennis matches with quick reflexes and strategic shot placement.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="stroke-icon mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-tennis-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Multiple Players</h3>
+                    <p class="text-apple-gray">Choose from various stickman characters, each with unique playing styles and abilities.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="stroke-icon mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-tennis-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Tournament Mode</h3>
+                    <p class="text-apple-gray">Compete in challenging tournaments to unlock new courts and special abilities.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="stroke-icon mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-tennis-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Leaderboards</h3>
+                    <p class="text-apple-gray">Compete with players worldwide and climb the global rankings to become #1.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="stroke-icon mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-tennis-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Dynamic Courts</h3>
+                    <p class="text-apple-gray">Play on various court surfaces that affect ball speed and bounce differently.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="stroke-icon mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-tennis-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Skill System</h3>
+                    <p class="text-apple-gray">Level up your player and unlock special abilities to dominate the court.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Players Section -->
+    <section id="players" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-4 section-title">
+                    Meet the Players
+                </h2>
+                <p class="text-lg text-apple-gray max-w-2xl mx-auto">
+                    Choose your favorite stickman tennis champion
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="player-card bg-apple-light-gray p-6 rounded-xl">
+                    <div class="text-center mb-4">
+                        <div class="inline-block p-2 bg-gray-200 rounded-full">
+                            <div class="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mx-auto">
+                                <div class="w-14 h-14 bg-white rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-center text-apple-dark-gray mb-2">Ace Andy</h3>
+                    <p class="text-sm text-center text-apple-gray mb-3">Serve Specialist</p>
+                    <div class="flex justify-center">
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div class="bg-tennis-green h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card bg-apple-light-gray p-6 rounded-xl">
+                    <div class="text-center mb-4">
+                        <div class="inline-block p-2 bg-gray-200 rounded-full">
+                            <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+                                <div class="w-14 h-14 bg-white rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-center text-apple-dark-gray mb-2">Backhand Barry</h3>
+                    <p class="text-sm text-center text-apple-gray mb-3">Defensive Master</p>
+                    <div class="flex justify-center">
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div class="bg-tennis-green h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card bg-apple-light-gray p-6 rounded-xl">
+                    <div class="text-center mb-4">
+                        <div class="inline-block p-2 bg-gray-200 rounded-full">
+                            <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto">
+                                <div class="w-14 h-14 bg-white rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-center text-apple-dark-gray mb-2">Volley Victoria</h3>
+                    <p class="text-sm text-center text-apple-gray mb-3">Net Dominator</p>
+                    <div class="flex justify-center">
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div class="bg-tennis-green h-2 rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-card bg-apple-light-gray p-6 rounded-xl">
+                    <div class="text-center mb-4">
+                        <div class="inline-block p-2 bg-gray-200 rounded-full">
+                            <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto">
+                                <div class="w-14 h-14 bg-white rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-center text-apple-dark-gray mb-2">Smash Steve</h3>
+                    <p class="text-sm text-center text-apple-gray mb-3">Power Player</p>
+                    <div class="flex justify-center">
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div class="bg-tennis-green h-2 rounded-full" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strokes Section -->
+    <section id="strokes" class="py-16 bg-apple-light-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-4 section-title">
+                    Master the Strokes
+                </h2>
+                <p class="text-lg text-apple-gray max-w-2xl mx-auto">
+                    Learn the essential tennis shots to dominate the court
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-2xl font-bold text-apple-dark-gray mb-6">Basic Shots</h3>
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-green-50 text-tennis-green font-bold">
+                                    S
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Serve</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Start the point with a powerful serve. Aim for the corners to make it difficult for your opponent to return.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-green-50 text-tennis-green font-bold">
+                                    F
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Forehand</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Your most powerful groundstroke. Hit the ball on your dominant side with a full swing for maximum power.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-green-50 text-tennis-green font-bold">
+                                    B
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Backhand</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Use one or two hands to hit the ball on your non-dominant side. Great for defensive plays.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-2xl font-bold text-apple-dark-gray mb-6">Advanced Shots</h3>
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-court-blue font-bold">
+                                    V
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Volley</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Hit the ball before it bounces, usually near the net. Perfect for finishing points quickly.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-court-blue font-bold">
+                                    SM
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Smash</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Overhead shot to put away high balls. Your most powerful offensive weapon.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-court-blue font-bold">
+                                    L
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Lob</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Hit the ball high and deep over your opponent's head when they're at the net.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-gradient-to-r from-tennis-green to-court-blue p-8 rounded-2xl">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h3 class="text-2xl font-bold text-white mb-4">Pro Tip: Master Timing</h3>
+                    <p class="text-white mb-6">
+                        Success in Stickman Tennis 3D depends on perfect timing. Press the shot button just as the ball reaches your player for maximum power and accuracy. Watch the ball closely and position your player correctly to hit winners!
+                    </p>
+                    <a href="#game" class="bg-white text-tennis-green font-bold py-3 px-8 rounded-full text-lg inline-block hover:bg-gray-100">
+                        Practice Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div class="mb-12 lg:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-6">
+                        About Stickman Tennis 3D
+                    </h2>
+                    <div class="space-y-4">
+                        <p class="text-lg text-apple-gray">
+                            Stickman Tennis 3D is a thrilling sports game that brings tennis to life with simple stickman graphics but incredibly engaging gameplay. Play against challenging AI opponents or with friends in multiplayer mode. Master your serves, volleys, and smashes to become the stickman tennis champion!
+                        </p>
+                        <p class="text-lg text-apple-gray">
+                            The game features intuitive controls that are easy to learn but difficult to master. With multiple difficulty levels, various court surfaces, and a progression system, Stickman Tennis 3D offers hours of entertainment for both casual players and competitive gamers.
+                        </p>
+                        <p class="text-lg text-apple-gray">
+                            Developed by sports game enthusiasts, Stickman Tennis 3D has become one of the most popular online tennis games, with thousands of daily players worldwide. Regular updates introduce new players, courts, and gameplay features to keep the experience fresh and exciting.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <div class="bg-apple-light-gray px-4 py-2 rounded-lg">
+                            <div class="text-sm text-apple-gray">Active Players</div>
+                            <div class="text-xl font-bold text-tennis-green">500K+</div>
+                        </div>
+                        <div class="bg-apple-light-gray px-4 py-2 rounded-lg">
+                            <div class="text-sm text-apple-gray">Tournaments</div>
+                            <div class="text-xl font-bold text-tennis-green">8</div>
+                        </div>
+                        <div class="bg-apple-light-gray px-4 py-2 rounded-lg">
+                            <div class="text-sm text-apple-gray">Courts</div>
+                            <div class="text-xl font-bold text-tennis-green">6</div>
+                        </div>
+                        <div class="bg-apple-light-gray px-4 py-2 rounded-lg">
+                            <div class="text-sm text-apple-gray">Rating</div>
+                            <div class="text-xl font-bold text-tennis-green">4.8/5</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-apple-light-gray rounded-2xl p-8 shadow-sm">
+                    <h3 class="text-2xl font-bold text-center text-apple-dark-gray mb-6">Game Statistics</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-apple-dark-gray">Matches Played</span>
+                                <span class="font-bold text-tennis-green">1.2M+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-tennis-green h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-apple-dark-gray">Aces Served</span>
+                                <span class="font-bold text-tennis-green">4.7M+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-court-blue h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-apple-dark-gray">Tournaments Won</span>
+                                <span class="font-bold text-tennis-green">120K+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-tennis-green h-2.5 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-apple-dark-gray">Perfect Matches</span>
+                                <span class="font-bold text-tennis-green">25K+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-court-blue h-2.5 rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="flex justify-center md:justify-start">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-tennis-green flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-apple-dark-gray">Stickman</span>
+                        <span class="text-tennis-green ml-1 font-title">Tennis 3D</span>
+                    </div>
+                </div>
+                <div class="mt-8 md:mt-0 md:order-1">
+                    <p class="text-center text-base text-apple-gray">
+                        &copy; 2023 StickmanGame.info. All rights reserved. 
+                        Stickman Tennis 3D is a trademark of CrazyGames.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-sm text-apple-gray">
+                <p>
+                    This website is not affiliated with CrazyGames. Stickman Tennis 3D is available to play at 
+                    <a href="https://www.crazygames.com/game/stickman-tennis-3d" class="text-apple-blue hover:underline">crazygames.com</a>
+                </p>
+                <div class="mt-4 flex justify-center space-x-6">
+                    <a href="#" class="text-apple-gray hover:text-apple-dark-gray">Privacy Policy</a>
+                    <a href="#" class="text-apple-gray hover:text-apple-dark-gray">Terms of Use</a>
+                    <a href="#" class="text-apple-gray hover:text-apple-dark-gray">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

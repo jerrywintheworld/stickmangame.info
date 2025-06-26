@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stickman Count Master - Play Free Online Stickman Game | stickmangame.info</title>
-    <meta name="description" content="Play Stickman Count Master, the ultimate counting challenge with stickman characters. Free online game with exciting levels and addictive gameplay.">
+    <meta name="description" content="Play Stickman Count Master for free! The ultimate counting challenge with stickman characters. Test your skills in this addictive puzzle game.">
     <link rel="canonical" href="https://stickmangame.info/" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +29,16 @@
         }
     </script>
     <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+        }
         .game-container {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
         }
         .game-container iframe {
             position: absolute;
@@ -47,25 +50,25 @@
         }
         .feature-card {
             transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
         }
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        .apple-gradient {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 113, 227, 0.15);
         }
         .btn-play {
             background: linear-gradient(to right, #0071e3, #00a2ff);
             transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 113, 227, 0.2);
         }
         .btn-play:hover {
-            transform: scale(1.05);
+            transform: translateY(-3px);
             box-shadow: 0 10px 25px -5px rgba(0, 113, 227, 0.4);
         }
         .nav-link {
             position: relative;
+            transition: color 0.3s ease;
         }
         .nav-link::after {
             content: '';
@@ -80,17 +83,37 @@
         .nav-link:hover::after {
             width: 100%;
         }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .character-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
     </style>
 </head>
 <body class="bg-apple-light-gray font-sans text-apple-dark-gray">
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
+    <nav class="sticky-nav border-b border-gray-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <span class="text-xl font-bold text-apple-blue">StickmanGame</span>
-                        <span class="text-apple-gray ml-1">.info</span>
+                        <div class="bg-apple-blue w-8 h-8 rounded-full flex items-center justify-center mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-apple-blue">Stickman</span>
+                        <span class="text-apple-gray">.info</span>
                     </div>
                     <div class="hidden md:ml-10 md:flex md:space-x-8">
                         <a href="#game" class="nav-link text-apple-blue font-medium">Play</a>
@@ -100,7 +123,7 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <a href="https://www.crazygames.com/game/count-masters-stickman-games" target="_blank" class="hidden md:block bg-apple-blue text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-600">
+                    <a href="https://www.crazygames.com/game/stickman-destruction-3-heroes" target="_blank" class="hidden md:block bg-apple-blue text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors">
                         Play Fullscreen
                     </a>
                 </div>
@@ -109,18 +132,44 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="apple-gradient py-16 md:py-24">
+    <section class="hero-gradient py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-apple-dark-gray mb-4">
-                    Stickman Count Master
-                </h1>
-                <p class="text-xl md:text-2xl text-apple-gray max-w-3xl mx-auto mb-10">
-                    The ultimate counting challenge with stickman characters. Test your skills in this addictive puzzle game!
-                </p>
-                <a href="#game" class="btn-play inline-block text-white font-bold py-3 px-8 rounded-full text-lg">
-                    Play Now →
-                </a>
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-apple-dark-gray mb-4">
+                        Stickman <span class="text-apple-blue">Count Master</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-apple-gray max-w-2xl mx-auto lg:mx-0 mb-10">
+                        The ultimate counting challenge with stickman characters. Test your skills in this addictive puzzle game!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#game" class="btn-play inline-block text-white font-bold py-3 px-8 rounded-full text-lg">
+                            Play Now
+                        </a>
+                        <a href="#features" class="bg-white border border-gray-300 text-apple-blue font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-50">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="character-animation">
+                            <div class="w-64 h-64 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                                            <span class="text-3xl font-bold text-apple-blue">42</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-16 h-4 bg-gray-300 rounded mb-2"></div>
+                                    <div class="w-12 h-12 bg-gray-400 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-6 -right-6 w-32 h-32 bg-blue-500 rounded-full opacity-10"></div>
+                        <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-apple-blue rounded-full opacity-10"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -133,17 +182,17 @@
                     Play Stickman Count Master Online
                 </h2>
                 <p class="text-lg text-apple-gray max-w-2xl mx-auto">
-                    Play the full version of Stickman Count Master directly in your browser. No downloads required!
+                    Enjoy the full version of Stickman Count Master directly in your browser. No downloads required!
                 </p>
             </div>
             
             <div class="max-w-4xl mx-auto">
                 <div class="game-container">
-                    <iframe src="https://www.crazygames.com/embed/count-masters-stickman-games" allowfullscreen></iframe>
+                    <iframe src="https://www.crazygames.com/embed/stickman-destruction-3-heroes" allowfullscreen></iframe>
                 </div>
                 
                 <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="https://www.crazygames.com/game/count-masters-stickman-games" target="_blank" class="btn-play text-center text-white font-bold py-3 px-6 rounded-lg text-lg">
+                    <a href="https://www.crazygames.com/game/stickman-destruction-3-heroes" target="_blank" class="btn-play text-center text-white font-bold py-3 px-6 rounded-lg text-lg">
                         Play Fullscreen
                     </a>
                     <button class="bg-white border border-gray-300 text-apple-blue font-bold py-3 px-6 rounded-lg text-lg hover:bg-gray-50">
@@ -159,14 +208,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-4">
-                    Game Features
+                    Why Players Love Stickman Count Master
                 </h2>
                 <p class="text-lg text-apple-gray max-w-2xl mx-auto">
-                    Discover what makes Stickman Count Master so addictive and fun to play
+                    Discover the features that make this game an addictive experience
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="feature-card bg-apple-card p-8 rounded-2xl">
                     <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -197,6 +246,36 @@
                     <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Multiplayer Mode</h3>
                     <p class="text-apple-gray">Challenge your friends in competitive counting battles to see who is the true Count Master.</p>
                 </div>
+                
+                <div class="feature-card bg-apple-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Fast-Paced Action</h3>
+                    <p class="text-apple-gray">Experience adrenaline-pumping gameplay with time-limited challenges and quick thinking requirements.</p>
+                </div>
+                
+                <div class="feature-card bg-apple-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Daily Challenges</h3>
+                    <p class="text-apple-gray">Compete in special daily events with unique rewards and global leaderboards.</p>
+                </div>
+                
+                <div class="feature-card bg-apple-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-apple-dark-gray mb-3">Regular Updates</h3>
+                    <p class="text-apple-gray">Enjoy fresh content with new levels, characters, and features added every month.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -219,13 +298,49 @@
                         <p class="text-lg text-apple-gray">
                             Developed by top game designers, Stickman Count Master has become one of the most popular stickman games online, with millions of players worldwide. The game is regularly updated with new levels and features to keep the gameplay fresh and exciting.
                         </p>
+                        <div class="mt-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-apple-gray">
+                                        <span class="font-bold">Over 5 million players</span> worldwide enjoy Stickman Count Master each month
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-48"></div>
-                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64 mt-8"></div>
-                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64"></div>
-                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-48 mt-8"></div>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl w-full h-48 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-apple-blue">150+</div>
+                            <div class="text-apple-gray mt-2">Challenging Levels</div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl w-full h-64 mt-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-apple-blue">4.8★</div>
+                            <div class="text-apple-gray mt-2">Player Rating</div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl w-full h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-apple-blue">12</div>
+                            <div class="text-apple-gray mt-2">Unique Characters</div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-100 rounded-xl w-full h-48 mt-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-apple-blue">50+</div>
+                            <div class="text-apple-gray mt-2">Power-ups</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -236,10 +351,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-apple-dark-gray mb-4">
-                    How to Play Stickman Count Master
+                    How to Master the Game
                 </h2>
                 <p class="text-lg text-apple-gray max-w-2xl mx-auto">
-                    Master the game with these simple tips and instructions
+                    Follow these tips to become a Stickman Count Master
                 </p>
             </div>
             
@@ -248,7 +363,7 @@
                     <div class="space-y-6">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue font-bold">
                                     1
                                 </div>
                             </div>
@@ -262,7 +377,7 @@
                         
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue font-bold">
                                     2
                                 </div>
                             </div>
@@ -276,7 +391,7 @@
                         
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue font-bold">
                                     3
                                 </div>
                             </div>
@@ -290,7 +405,7 @@
                         
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue font-bold">
                                     4
                                 </div>
                             </div>
@@ -301,6 +416,20 @@
                                 </p>
                             </div>
                         </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-50 text-apple-blue font-bold">
+                                    5
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-apple-dark-gray">Pro Tips</h4>
+                                <p class="mt-2 text-apple-gray">
+                                    Focus on patterns rather than counting individually. Use the environment to your advantage. Save power-ups for difficult levels. Practice daily to improve your reaction time.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -308,13 +437,18 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white">
+    <footer class="bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="flex justify-center md:justify-start">
                     <div class="flex-shrink-0 flex items-center">
-                        <span class="text-xl font-bold text-apple-blue">StickmanGame</span>
-                        <span class="text-apple-gray ml-1">.info</span>
+                        <div class="bg-apple-blue w-8 h-8 rounded-full flex items-center justify-center mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-apple-blue">Stickman</span>
+                        <span class="text-apple-gray">.info</span>
                     </div>
                 </div>
                 <div class="mt-8 md:mt-0 md:order-1">
@@ -327,7 +461,7 @@
             <div class="mt-8 text-center text-sm text-apple-gray">
                 <p>
                     This website is not affiliated with CrazyGames. Stickman Count Master is available to play at 
-                    <a href="https://www.crazygames.com/game/count-masters-stickman-games" class="text-apple-blue hover:underline">crazygames.com</a>
+                    <a href="https://www.crazygames.com/game/stickman-destruction-3-heroes" class="text-apple-blue hover:underline">crazygames.com</a>
                 </p>
             </div>
         </div>
